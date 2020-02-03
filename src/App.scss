@@ -1,0 +1,60 @@
+////////////
+// RESET
+////////////
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+////////////
+// VARIABLES
+////////////
+$primary: #102542;
+$secondary: #ffeddf;
+$danger: #f87096;
+////////////
+// CONTAINERS
+////////////
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+////////////
+// NAVBAR
+////////////
+.main-nav {
+  background: $primary;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  .brand p {
+    font-size: 1.5rem;
+    color: $danger;
+  }
+  nav a {
+    text-decoration: none;
+    color: $danger;
+    margin: 0 0.5rem;
+    &:hover {
+      color: $secondary;
+    }
+    &.active {
+      color: $secondary;
+    }
+  }
+}
+////////////
+// SHOP
+////////////
+section#shop {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 5rem auto;
+  justify-content: space-evenly;
+  article {
+    width: 33%;
+    text-align: center;
+    margin: 2rem 0;
+  }
+}
