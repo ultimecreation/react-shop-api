@@ -165,6 +165,7 @@ section#single-product {
         @include white-on-blue;
       }
       .product-card__body {
+        flex-direction: column;
         margin: 1.5rem 0;
         .sizes {
           margin-top: 0.5rem;

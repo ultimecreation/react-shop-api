@@ -7,8 +7,7 @@ export class ProductProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: [],
-      productDetails: null
+      products: []
     };
     this.getProductList = this.getProductList.bind(this);
     this.getSingleProduct = this.getSingleProduct.bind(this);

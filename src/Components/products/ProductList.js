@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ProductList = props => {
-  const { products } = props;
-
+  const { products, addToCart } = props;
+  const handleAddToCart = product => {
+    addToCart(product);
+  };
   return (
     <>
       {products.map(product => (
@@ -28,7 +30,11 @@ const ProductList = props => {
                 currency: "EUR"
               }).format(product.price)}
             </p>
-            <span role="img" aria-label="caddie">
+            <span
+              role="img"
+              aria-label="caddie"
+              onClick={handleAddToCart.bind(this, product)}
+            >
               &#128722;
             </span>
           </div>
