@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 
-const ProductContext = React.createContext();
+export const ProductContext = React.createContext();
 ProductContext.displayName = "Product";
 
 export class ProductProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: []
+      products: [],
+      productDetails: null
     };
     this.getProductList = this.getProductList.bind(this);
     this.getSingleProduct = this.getSingleProduct.bind(this);
@@ -21,7 +22,13 @@ export class ProductProvider extends Component {
       .then(data => this.setState({ products: data }));
   }
 
-  getSingleProduct() {}
+  getSingleProduct(id) {
+    return fetch(`http://localhost/shop-api/api/v1/products/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        return data;
+      });
+  }
 
   render() {
     const productState = {

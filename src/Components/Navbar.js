@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 const Navbar = props => {
   return (
-    <div className="main-nav">
+    <div className="main-nav ">
       <div className="brand">
         <p>
           <strong>React Shop Api</strong>
@@ -13,13 +13,13 @@ const Navbar = props => {
           to="/"
           activeClassName={props.location.pathname === "/" ? "active" : ""}
         >
-          Shop
+          Boutique
         </NavLink>
         <NavLink
           to="/cart"
           activeClassName={props.location.pathname === "/cart" ? "active" : ""}
         >
-          Cart
+          <span>&#128717;</span>
         </NavLink>
       </nav>
     </div>

@@ -3,9 +3,11 @@ import React, { Component } from "react";
 export default class Cart extends Component {
   render() {
     return (
-      <div>
-        <h1>Cart</h1>
-      </div>
+      <main>
+        <header>
+          <h1>Détails du Panier </h1>
+        </header>
+      </main>
     );
   }
 }
