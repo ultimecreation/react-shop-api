@@ -10,6 +10,7 @@ export class CartProvider extends Component {
       cartItems: []
     };
     this.addToCart = this.addToCart.bind(this);
+    this.removeFromCart = this.removeFromCart.bind(this);
   }
 
   componentDidMount() {
@@ -35,13 +36,26 @@ export class CartProvider extends Component {
 
     this.setState({ cartItems });
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-    console.log(this.state.cartItems);
+  }
+  removeFromCart(product, cartIndex) {
+    let cartItems = this.state.cartItems;
+    cartItems.forEach(item => {
+      if (item.id === product.id) {
+        item.count--;
+        if (item.count <= 0) {
+          cartItems.splice(cartIndex, 1);
+        }
+      }
+    });
+    this.setState({ cartItems });
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    console.log(cartIndex);
   }
   render() {
     const cartState = {
       ...this.state,
-      addToCart: this.addToCart
+      addToCart: this.addToCart,
+      removeFromCart: this.removeFromCart
     };
     return (
       <CartContext.Provider value={cartState}>

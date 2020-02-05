@@ -32,11 +32,11 @@ export default class ProductDetails extends Component {
     }
 
     return (
-      <main>
+      <main id="single-product">
         <header>
           <h1>Détails {product.title} </h1>
         </header>
-        <section id="single-product">
+        <section>
           <div className="single-product__body">
             <img src={imageUrl} alt={imageAlt} />
             <p>{product.description} </p>
