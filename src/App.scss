@@ -153,6 +153,11 @@ main#single-product {
 main#cart-validation {
   width: 100%;
   section {
+    .error-message {
+      margin: 0 auto;
+      background: pink;
+      text-align: center;
+    }
     form {
       .form-group {
         width: 100%;
@@ -175,6 +180,7 @@ main#cart-validation {
             color: white;
             border: 1px solid red;
             height: 100%;
+            cursor: pointer;
           }
           &.count {
             display: flex;

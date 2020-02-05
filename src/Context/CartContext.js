@@ -11,6 +11,8 @@ export class CartProvider extends Component {
     };
     this.addToCart = this.addToCart.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
+    this.deleteFromCart = this.deleteFromCart.bind(this);
+    this.registerItems = this.registerItems.bind(this);
   }
 
   componentDidMount() {
@@ -19,6 +21,10 @@ export class CartProvider extends Component {
         cartItems: JSON.parse(localStorage.getItem("cartItems"))
       });
     }
+  }
+  registerItems(cartItems) {
+    this.setState({ cartItems });
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }
   addToCart(product) {
     let cartItems = this.state.cartItems;
@@ -34,8 +40,7 @@ export class CartProvider extends Component {
       cartItems.push({ ...product, count: 1 });
     }
 
-    this.setState({ cartItems });
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    this.registerItems(cartItems);
   }
   removeFromCart(product, cartIndex) {
     let cartItems = this.state.cartItems;
@@ -47,15 +52,22 @@ export class CartProvider extends Component {
         }
       }
     });
-    this.setState({ cartItems });
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    console.log(cartIndex);
+    this.registerItems(cartItems);
+  }
+  deleteFromCart(cartIndex) {
+    let cartItems = this.state.cartItems;
+
+    cartItems.splice(cartIndex, 1);
+    this.registerItems(cartItems);
+
+    console.log(cartIndex, cartItems);
   }
   render() {
     const cartState = {
       ...this.state,
       addToCart: this.addToCart,
-      removeFromCart: this.removeFromCart
+      removeFromCart: this.removeFromCart,
+      deleteFromCart: this.deleteFromCart
     };
     return (
       <CartContext.Provider value={cartState}>

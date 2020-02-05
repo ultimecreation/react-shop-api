@@ -1,76 +1,171 @@
 import React, { Component } from "react";
 import { CartContext, CartConsumer } from "../Context/CartContext";
-
 export default class Cart extends Component {
   constructor(props) {
     super(props);
-    this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.state = {
+      errors: [],
+      validatedCart: []
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleAddToCart(item) {
     this.context.addToCart(item);
   }
   handleRemoveFromCart(item, cartIndex) {
     this.context.removeFromCart(item, cartIndex);
   }
+  handleDeleteFromCart(cartIndex) {
+    this.context.deleteFromCart(cartIndex);
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+    let formGroups = document.querySelectorAll(".form-group");
+    let errors = [];
+    formGroups.forEach((formGroup, i) => {
+      let validatedCart = this.state.validatedCart;
+
+      if (formGroup.children[2].children[0].value === "") {
+        errors.push(
+          `la taille n'a pas été confirmée pour: ${formGroup.children[1].children[0].value}`
+        );
+        this.setState({ errors });
+        return errors;
+      }
+
+      if (
+        validatedCart.find(
+          registeredItem =>
+            registeredItem.itemId === formGroup.children[0].children[0].value &&
+            registeredItem.itemCount !== formGroup.children[3].children[1].value
+        )
+      ) {
+        validatedCart[i].itemCount = formGroup.children[3].children[1].value;
+
+        return;
+      }
+      if (
+        validatedCart.find(
+          registeredItem =>
+            registeredItem.itemId === formGroup.children[0].children[0].value
+        )
+      ) {
+        console.log(i);
+        errors["duplicate"] = ["duplicate"];
+        return;
+      } else {
+        let currentItem = {};
+        currentItem = {
+          [formGroup.children[0].children[0].name]:
+            formGroup.children[0].children[0].value,
+          [formGroup.children[1].children[0].name]:
+            formGroup.children[1].children[0].value,
+          [formGroup.children[2].children[0].name]:
+            formGroup.children[2].children[0].value,
+          [formGroup.children[3].children[1].name]:
+            formGroup.children[3].children[1].value
+        };
+
+        validatedCart.push(currentItem);
+        this.setState({ validatedCart, errors: [] });
+      }
+    });
+  }
   render() {
     return (
       <CartConsumer>
         {cartState => {
-          const { cartItems, addToCart } = { ...cartState };
-          console.log(cartItems);
+          const { cartItems } = { ...cartState };
+
           return (
             <main id="cart-validation">
               <header>
                 <h1>Détails du Panier </h1>
               </header>
               <section>
-                <form>
-                  {cartItems.map((item, cartIndex) => (
-                    <div className="form-group" key={item.id}>
-                      <p>
-                        <input
-                          type="text"
-                          name="itemTitle"
-                          value={item.title}
-                          disabled
-                        />
-                      </p>
-                      <p className="count">
-                        <span onClick={this.handleAddToCart.bind(this, item)}>
-                          +
-                        </span>
-                        <input
-                          type="text"
-                          name="itemCount"
-                          value={item.count}
-                          disabled
-                        />
-                        <span
-                          onClick={this.handleRemoveFromCart.bind(
-                            this,
-                            item,
-                            cartIndex
-                          )}
-                        >
-                          -
-                        </span>
-                      </p>
-                      <p>
-                        <input
-                          type="text"
-                          name="itemPrice"
-                          value={new Intl.NumberFormat("de-DE", {
-                            style: "currency",
-                            currency: "EUR"
-                          }).format((item.count * item.price).toFixed(2))}
-                          disabled
-                        />
-                      </p>
-                      <p>
-                        <span className="trash">&#128465;</span>
-                      </p>
-                    </div>
+                {this.state.errors &&
+                  this.state.errors.map((error, errorIndex) => (
+                    <p key={errorIndex} className="error-message">
+                      {error}
+                    </p>
                   ))}
+                <form onSubmit={this.handleSubmit}>
+                  {cartItems.map((item, cartIndex) => {
+                    let sizesArr = [];
+                    for (let key in item.availableSizes) {
+                      sizesArr.push(item.availableSizes[key].size);
+                    }
+
+                    return (
+                      <div className="form-group" key={item.id}>
+                        <p>
+                          <input type="hidden" name="itemId" value={item.id} />
+                        </p>
+                        <p>
+                          <input
+                            type="text"
+                            name="itemTitle"
+                            value={item.title}
+                            disabled
+                          />
+                        </p>
+                        <p>
+                          <select name="selectedSize">
+                            <option value="">Sélection taille</option>
+                            {sizesArr.map((size, index) => (
+                              <option key={index} value={size}>
+                                {size}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                        <p className="count">
+                          <span
+                            onClick={this.handleRemoveFromCart.bind(
+                              this,
+                              item,
+                              cartIndex
+                            )}
+                          >
+                            -
+                          </span>
+                          <input
+                            type="text"
+                            name="itemCount"
+                            value={item.count}
+                            disabled
+                          />
+                          <span onClick={this.handleAddToCart.bind(this, item)}>
+                            +
+                          </span>
+                        </p>
+                        <p>
+                          <input
+                            type="text"
+                            name="itemPrice"
+                            value={new Intl.NumberFormat("de-DE", {
+                              style: "currency",
+                              currency: "EUR"
+                            }).format((item.count * item.price).toFixed(2))}
+                            disabled
+                          />
+                        </p>
+                        <p>
+                          <span
+                            className="trash"
+                            onClick={this.handleDeleteFromCart.bind(
+                              this,
+                              cartIndex
+                            )}
+                          >
+                            &#128465;
+                          </span>
+                        </p>
+                      </div>
+                    );
+                  })}
+                  <input type="submit" value="Valider le Panier" />
                 </form>
               </section>
             </main>
