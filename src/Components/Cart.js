@@ -59,9 +59,15 @@ export default class Cart extends Component {
                         <input
                           type="text"
                           name="itemPrice"
-                          value={item.count * item.price}
+                          value={new Intl.NumberFormat("de-DE", {
+                            style: "currency",
+                            currency: "EUR"
+                          }).format((item.count * item.price).toFixed(2))}
                           disabled
                         />
+                      </p>
+                      <p>
+                        <span className="trash">&#128465;</span>
                       </p>
                     </div>
                   ))}
