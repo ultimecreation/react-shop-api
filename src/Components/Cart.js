@@ -51,7 +51,6 @@ export default class Cart extends Component {
             registeredItem.itemId === formGroup.children[0].children[0].value
         )
       ) {
-        console.log(i);
         errors["duplicate"] = ["duplicate"];
         return;
       } else {
@@ -68,28 +67,36 @@ export default class Cart extends Component {
         };
 
         validatedCart.push(currentItem);
+
         this.setState({ validatedCart, errors: [] });
       }
+      if (formGroups.length === validatedCart.length) {
+        this.props.history.push("/paiement");
+      }
     });
+
+    //
   }
   render() {
     return (
       <CartConsumer>
         {cartState => {
           const { cartItems } = { ...cartState };
-
+          const { errors } = this.state;
           return (
             <main id="cart-validation">
               <header>
                 <h1>Détails du Panier </h1>
               </header>
               <section>
-                {this.state.errors &&
-                  this.state.errors.map((error, errorIndex) => (
-                    <p key={errorIndex} className="error-message">
-                      {error}
-                    </p>
-                  ))}
+                {errors.length > 0 &&
+                  errors.map((error, errorIndex) => {
+                    return (
+                      <p key={errorIndex} className="error-message">
+                        {error}
+                      </p>
+                    );
+                  })}
                 <form onSubmit={this.handleSubmit}>
                   {cartItems.map((item, cartIndex) => {
                     let sizesArr = [];

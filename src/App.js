@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Cart from "./Components/Cart";
 import Shop from "./Components/Shop";
 import ProductDetails from "./Components/products/ProductDetails";
+import Checkout from "./Components/Checkout";
 function App() {
   return (
     <div className="App">
@@ -14,6 +15,7 @@ function App() {
           <Route exact path="/" component={Shop} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/details/:id" component={ProductDetails} />
+          <Route exact path="/paiement" component={Checkout} />
         </Switch>
       </BrowserRouter>
     </div>
