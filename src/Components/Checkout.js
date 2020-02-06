@@ -13,8 +13,24 @@ export class Checkout extends Component {
       production: "YOUR-PRODUCTION-APP-ID"
     };
     const onSuccess = payment => {
+      fetch("http://localhost/shop-api/api/v1/ordres/creer", {
+        method: "POST",
+        body: JSON.stringify({
+          paymentStatus: payment.paid,
+          paymentId: payment.paymentID,
+          validatedCart: validatedCart
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === "success") {
+            this.props.history.push("/");
+          }
+        });
       // Congratulation, it came here means everything's fine!
-      console.log(payment, "The payment was succeeded!");
+      // console.log(
+      //   JSON.stringify({ validatedCart: validatedCart, payment: payment })
+      // );
       // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
     };
 
@@ -22,6 +38,7 @@ export class Checkout extends Component {
       (sum, item) => (sum += item.itemPrice * item.itemCount),
       0
     );
+
     return (
       <main id="checkout">
         <header>
@@ -53,8 +70,8 @@ export class Checkout extends Component {
           </h3>
           <PaypalExpressBtn
             client={client}
-            currency={"EUR"}
-            total={montant}
+            currency="EUR"
+            total={montant.toFixed(2)}
             onSuccess={onSuccess}
           />
         </section>
