@@ -42,7 +42,6 @@ export default class Cart extends Component {
         )
       ) {
         validatedCart[i].itemCount = formGroup.children[3].children[1].value;
-
         return;
       }
       if (
@@ -63,14 +62,19 @@ export default class Cart extends Component {
           [formGroup.children[2].children[0].name]:
             formGroup.children[2].children[0].value,
           [formGroup.children[3].children[1].name]:
-            formGroup.children[3].children[1].value
+            formGroup.children[3].children[1].value,
+          [formGroup.children[5].children[0].name]:
+            formGroup.children[5].children[0].value
         };
 
         validatedCart.push(currentItem);
-
         this.setState({ validatedCart, errors: [] });
       }
       if (formGroups.length === validatedCart.length) {
+        this.context.setValidatedCart(
+          "validatedCart",
+          this.state.validatedCart
+        );
         this.props.history.push("/paiement");
       }
     });
@@ -86,7 +90,7 @@ export default class Cart extends Component {
           return (
             <main id="cart-validation">
               <header>
-                <h1>Détails du Panier </h1>
+                <h1>Valider ma commande</h1>
               </header>
               <section>
                 {errors.length > 0 &&
@@ -155,6 +159,14 @@ export default class Cart extends Component {
                               style: "currency",
                               currency: "EUR"
                             }).format((item.count * item.price).toFixed(2))}
+                            disabled
+                          />
+                        </p>
+                        <p>
+                          <input
+                            type="hidden"
+                            name="itemPrice"
+                            value={item.price}
                             disabled
                           />
                         </p>

@@ -207,6 +207,29 @@ main#cart-validation {
     }
   }
 }
+///////////
+// CHECKOUT
+////////////
+main#checkout {
+  header {
+  }
+  section {
+    ul.item-line,
+    ul.item-line__header {
+      margin: 0.5rem auto;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+      li {
+        width: 22%;
+      }
+    }
+    h3 {
+      margin-top: 2rem;
+    }
+  }
+}
 //////////
 // MEDIA QUERY >596px
 //////////

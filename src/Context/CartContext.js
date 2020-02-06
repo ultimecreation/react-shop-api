@@ -22,6 +22,16 @@ export class CartProvider extends Component {
       });
     }
   }
+  getValidatedCart(validatedCartName) {
+    const validatedCartData = JSON.parse(
+      localStorage.getItem(validatedCartName)
+    );
+
+    return validatedCartData;
+  }
+  setValidatedCart(validatedCartName, validatedCartData) {
+    localStorage.setItem(validatedCartName, JSON.stringify(validatedCartData));
+  }
   registerItems(cartItems) {
     this.setState({ cartItems });
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -59,15 +69,15 @@ export class CartProvider extends Component {
 
     cartItems.splice(cartIndex, 1);
     this.registerItems(cartItems);
-
-    console.log(cartIndex, cartItems);
   }
   render() {
     const cartState = {
       ...this.state,
       addToCart: this.addToCart,
       removeFromCart: this.removeFromCart,
-      deleteFromCart: this.deleteFromCart
+      deleteFromCart: this.deleteFromCart,
+      setValidatedCart: this.setValidatedCart,
+      getValidatedCart: this.getValidatedCart
     };
     return (
       <CartContext.Provider value={cartState}>
