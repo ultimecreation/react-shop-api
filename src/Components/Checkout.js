@@ -27,11 +27,6 @@ export class Checkout extends Component {
             this.props.history.push("/");
           }
         });
-      // Congratulation, it came here means everything's fine!
-      // console.log(
-      //   JSON.stringify({ validatedCart: validatedCart, payment: payment })
-      // );
-      // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
     };
 
     const montant = validatedCart.reduce(

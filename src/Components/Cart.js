@@ -123,7 +123,7 @@ export default class Cart extends Component {
                         </p>
                         <p>
                           <select name="selectedSize">
-                            <option value="">Sélection taille</option>
+                            <option value="">taille</option>
                             {sizesArr.map((size, index) => (
                               <option key={index} value={size}>
                                 {size}

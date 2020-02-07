@@ -24,6 +24,7 @@ $danger: #f87096;
   margin: 0 auto;
 }
 main {
+  margin-top: 2rem;
   padding: 1rem;
 }
 ////////////
@@ -227,6 +228,40 @@ main#checkout {
     }
     h3 {
       margin-top: 2rem;
+    }
+  }
+}
+///////////
+// CONNEXION
+////////////
+main#connexion {
+  header {
+  }
+  section {
+    form {
+      label,
+      input {
+        font-size: 1rem;
+        display: block;
+        width: 100%;
+        margin: 0.5rem auto;
+        span.error {
+          color: red;
+        }
+      }
+      input[type="submit"] {
+        margin-top: 1rem;
+        background: $primary;
+        padding: 0.5rem;
+        color: $secondary;
+        border: none;
+        &:hover {
+          border: 1px solid $primary;
+          color: $primary;
+          font-weight: bold;
+          background: white;
+        }
+      }
     }
   }
 }

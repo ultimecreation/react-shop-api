@@ -16,6 +16,14 @@ const Navbar = props => {
           Boutique
         </NavLink>
         <NavLink
+          to="/connexion"
+          activeClassName={
+            props.location.pathname === "/connexion" ? "active" : ""
+          }
+        >
+          Connexion
+        </NavLink>
+        <NavLink
           to="/cart"
           activeClassName={props.location.pathname === "/cart" ? "active" : ""}
         >
