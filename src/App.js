@@ -7,6 +7,8 @@ import Shop from "./Components/Shop";
 import ProductDetails from "./Components/products/ProductDetails";
 import Checkout from "./Components/Checkout";
 import Login from "./Components/Login";
+import ProtectedRoute from "./Components/Utils/ProtectedRoute";
+import Dashboard from "./Components/Dashboard";
 function App() {
   return (
     <div className="App">
@@ -18,6 +20,7 @@ function App() {
           <Route exact path="/details/:id" component={ProductDetails} />
           <Route exact path="/paiement" component={Checkout} />
           <Route path="/connexion" component={Login} />
+          <ProtectedRoute path="/dashboard" component={Dashboard} />
         </Switch>
       </BrowserRouter>
     </div>

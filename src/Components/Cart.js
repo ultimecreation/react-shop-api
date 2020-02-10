@@ -139,7 +139,7 @@ export default class Cart extends Component {
                               cartIndex
                             )}
                           >
-                            -
+                            &#8861;
                           </span>
                           <input
                             type="text"
@@ -148,7 +148,7 @@ export default class Cart extends Component {
                             disabled
                           />
                           <span onClick={this.handleAddToCart.bind(this, item)}>
-                            +
+                            &oplus;
                           </span>
                         </p>
                         <p>

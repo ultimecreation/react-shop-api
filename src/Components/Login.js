@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { UserContext } from "../Context/UserContext";
 
 export default class Login extends Component {
   constructor(props) {
@@ -36,13 +37,15 @@ export default class Login extends Component {
     }
     if (data.token) {
       const token = data.token;
-      if (token.startsWith("Bearer "))
-        localStorage.setItem("token", JSON.stringify(token));
+      if (token.startsWith("Bearer ")) {
+        this.context.setToken(token);
+        this.props.history.push("/dashboard");
+      }
     }
   }
   render() {
     const { errors } = this.state;
-    console.log(errors.password);
+
     return (
       <main id="connexion">
         <header>
@@ -78,6 +81,7 @@ export default class Login extends Component {
                 id="password"
                 placeholder="Entrer votre mot de passe"
                 onChange={this.handleChange}
+                autoComplete="false"
               />
             </div>
             <input type="submit" value="Se Connecter" />{" "}
@@ -87,3 +91,4 @@ export default class Login extends Component {
     );
   }
 }
+Login.contextType = UserContext;
