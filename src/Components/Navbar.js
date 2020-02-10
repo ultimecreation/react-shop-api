@@ -2,63 +2,47 @@ import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { UserConsumer } from "../Context/UserContext";
 import { CartConsumer } from "../Context/CartContext";
-const Navbar = (props, context) => {
-  console.log(props, context);
+const Navbar = props => {
   return (
-    <UserConsumer>
-      {userState => (
-        <div className="main-nav ">
-          <div className="brand">
-            <p>
-              <strong>React Shop Api</strong>
-            </p>
-          </div>
-          <nav>
-            <NavLink
-              to="/"
-              activeClassName={props.location.pathname === "/" ? "active" : ""}
-            >
-              Boutique
-            </NavLink>
+    <div className="main-nav ">
+      <div className="brand">
+        <p>
+          <strong>React Shop Api</strong>
+        </p>
+      </div>
+      <nav>
+        <NavLink
+          to="/"
+          activeClassName={props.location.pathname === "/" ? "active" : ""}
+        >
+          Boutique
+        </NavLink>
 
-            <CartConsumer>
-              {cartState => (
-                <NavLink
-                  to="/cart"
-                  activeClassName={
-                    props.location.pathname === "/cart" ? "active" : ""
-                  }
-                >
-                  <span>
-                    &#128717;<small>({cartState.itemsCount})</small>
-                  </span>
-                </NavLink>
-              )}
-            </CartConsumer>
-            {!userState.isAuthenticated && (
-              <NavLink
-                to="/connexion"
-                activeClassName={
-                  props.location.pathname === "/connexion" ? "active" : ""
-                }
-              >
-                Connexion
-              </NavLink>
-            )}
-            {userState.isAuthenticated && (
-              <NavLink
-                to="/dashboard"
-                activeClassName={
-                  props.location.pathname === "/dashboard" ? "active" : ""
-                }
-              >
-                Mon Compte
-              </NavLink>
-            )}
-          </nav>
-        </div>
-      )}
-    </UserConsumer>
+        <CartConsumer>
+          {cartState => (
+            <NavLink
+              to="/cart"
+              activeClassName={
+                props.location.pathname === "/cart" ? "active" : ""
+              }
+            >
+              <span>
+                &#128717;<small>({cartState.itemsCount})</small>
+              </span>
+            </NavLink>
+          )}
+        </CartConsumer>
+
+        <NavLink
+          to="/mon-compte"
+          activeClassName={
+            props.location.pathname === "/mon-compte" ? "active" : ""
+          }
+        >
+          Mon Compte
+        </NavLink>
+      </nav>
+    </div>
   );
 };
 

@@ -8,7 +8,7 @@ export class UserProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuthenticated: false,
+      isAuthenticated: null,
       user: {}
     };
     this.setToken = this.setToken.bind(this);
@@ -36,7 +36,7 @@ export class UserProvider extends Component {
       ...this.state,
       setToken: this.setToken
     };
-    console.log(this.state);
+
     return (
       <UserContext.Provider value={userState}>
         {this.props.children}

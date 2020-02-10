@@ -1,21 +1,26 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import { CartContext } from "../Context/CartContext";
 import PaypalExpressBtn from "react-paypal-express-checkout";
 export class Checkout extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     const validatedCart = this.context.getValidatedCart("validatedCart");
+
     const client = {
       sandbox:
         "ARfF7X6QHlMiDMt-dQSu4Xi0cz5u7vQm55mRI3EmZkf5S7XFlds_EkoMu2U0tC77S1TNoPtdZF8q9Ar1",
       production: "YOUR-PRODUCTION-APP-ID"
     };
     const onSuccess = payment => {
+      let token = JSON.parse(localStorage.getItem("token"));
+
       fetch("http://localhost/shop-api/api/v1/ordres/creer", {
         method: "POST",
         body: JSON.stringify({
+          token: token,
           paymentStatus: payment.paid,
           paymentId: payment.paymentID,
           validatedCart: validatedCart
@@ -24,8 +29,13 @@ export class Checkout extends Component {
         .then(response => response.json())
         .then(data => {
           if (data.status === "success") {
-            this.props.history.push("/");
+            this.context.deleteAllOnSuccessfullPurchase();
+
+            this.props.history.push("/mon-compte");
           }
+        })
+        .catch(err => {
+          console.log(err);
         });
     };
 

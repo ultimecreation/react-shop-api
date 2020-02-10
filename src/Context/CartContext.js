@@ -14,7 +14,9 @@ export class CartProvider extends Component {
     this.removeFromCart = this.removeFromCart.bind(this);
     this.deleteFromCart = this.deleteFromCart.bind(this);
     this.registerItems = this.registerItems.bind(this);
-    // this.getItemsCount = this.getItemsCount.bind(this);
+    this.deleteAllOnSuccessfullPurchase = this.deleteAllOnSuccessfullPurchase.bind(
+      this
+    );
   }
 
   componentDidMount() {
@@ -88,6 +90,11 @@ export class CartProvider extends Component {
     this.registerItems(cartItems);
     this.getItemsCount();
   }
+  deleteAllOnSuccessfullPurchase() {
+    this.setState({ cartItems: [], itemsCount: 0 });
+    localStorage.removeItem("validatedCart");
+    localStorage.removeItem("cartItems");
+  }
   render() {
     const cartState = {
       ...this.state,
@@ -95,7 +102,8 @@ export class CartProvider extends Component {
       removeFromCart: this.removeFromCart,
       deleteFromCart: this.deleteFromCart,
       setValidatedCart: this.setValidatedCart,
-      getValidatedCart: this.getValidatedCart
+      getValidatedCart: this.getValidatedCart,
+      deleteAllOnSuccessfullPurchase: this.deleteAllOnSuccessfullPurchase
     };
     return (
       <CartContext.Provider value={cartState}>

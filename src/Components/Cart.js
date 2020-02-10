@@ -92,101 +92,114 @@ export default class Cart extends Component {
               <header>
                 <h1>Valider ma commande</h1>
               </header>
-              <section>
-                {errors.length > 0 &&
-                  errors.map((error, errorIndex) => {
-                    return (
-                      <p key={errorIndex} className="error-message">
-                        {error}
-                      </p>
-                    );
-                  })}
-                <form onSubmit={this.handleSubmit}>
-                  {cartItems.map((item, cartIndex) => {
-                    let sizesArr = [];
-                    for (let key in item.availableSizes) {
-                      sizesArr.push(item.availableSizes[key].size);
-                    }
+              {cartItems.length < 1 && (
+                <section>
+                  <p>Aucun article dans votre panier</p>
+                </section>
+              )}
+              {cartItems.length > 0 && (
+                <section>
+                  {errors.length > 0 &&
+                    errors.map((error, errorIndex) => {
+                      return (
+                        <p key={errorIndex} className="error-message">
+                          {error}
+                        </p>
+                      );
+                    })}
+                  <form onSubmit={this.handleSubmit}>
+                    {cartItems.map((item, cartIndex) => {
+                      let sizesArr = [];
+                      for (let key in item.availableSizes) {
+                        sizesArr.push(item.availableSizes[key].size);
+                      }
 
-                    return (
-                      <div className="form-group" key={item.id}>
-                        <p>
-                          <input type="hidden" name="itemId" value={item.id} />
-                        </p>
-                        <p>
-                          <input
-                            type="text"
-                            name="itemTitle"
-                            value={item.title}
-                            disabled
-                          />
-                        </p>
-                        <p>
-                          <select name="selectedSize">
-                            <option value="">taille</option>
-                            {sizesArr.map((size, index) => (
-                              <option key={index} value={size}>
-                                {size}
-                              </option>
-                            ))}
-                          </select>
-                        </p>
-                        <p className="count">
-                          <span
-                            onClick={this.handleRemoveFromCart.bind(
-                              this,
-                              item,
-                              cartIndex
-                            )}
-                          >
-                            &#8861;
-                          </span>
-                          <input
-                            type="text"
-                            name="itemCount"
-                            value={item.count}
-                            disabled
-                          />
-                          <span onClick={this.handleAddToCart.bind(this, item)}>
-                            &oplus;
-                          </span>
-                        </p>
-                        <p>
-                          <input
-                            type="text"
-                            name="itemPrice"
-                            value={new Intl.NumberFormat("de-DE", {
-                              style: "currency",
-                              currency: "EUR"
-                            }).format((item.count * item.price).toFixed(2))}
-                            disabled
-                          />
-                        </p>
-                        <p>
-                          <input
-                            type="hidden"
-                            name="itemPrice"
-                            value={item.price}
-                            disabled
-                          />
-                        </p>
-                        <p>
-                          <span
-                            className="trash"
-                            onClick={this.handleDeleteFromCart.bind(
-                              this,
-                              cartIndex
-                            )}
-                          >
-                            &#128465;
-                          </span>
-                        </p>
-                      </div>
-                    );
-                  })}
-                  <input type="submit" value="Valider le Panier" />
-                </form>
-              </section>
+                      return (
+                        <div className="form-group" key={item.id}>
+                          <p>
+                            <input
+                              type="hidden"
+                              name="itemId"
+                              value={item.id}
+                            />
+                          </p>
+                          <p>
+                            <input
+                              type="text"
+                              name="itemTitle"
+                              value={item.title}
+                              disabled
+                            />
+                          </p>
+                          <p>
+                            <select name="selectedSize">
+                              <option value="">taille</option>
+                              {sizesArr.map((size, index) => (
+                                <option key={index} value={size}>
+                                  {size}
+                                </option>
+                              ))}
+                            </select>
+                          </p>
+                          <p className="count">
+                            <span
+                              onClick={this.handleRemoveFromCart.bind(
+                                this,
+                                item,
+                                cartIndex
+                              )}
+                            >
+                              &#8861;
+                            </span>
+                            <input
+                              type="text"
+                              name="itemCount"
+                              value={item.count}
+                              disabled
+                            />
+                            <span
+                              onClick={this.handleAddToCart.bind(this, item)}
+                            >
+                              &oplus;
+                            </span>
+                          </p>
+                          <p>
+                            <input
+                              type="text"
+                              name="itemPrice"
+                              value={new Intl.NumberFormat("de-DE", {
+                                style: "currency",
+                                currency: "EUR"
+                              }).format((item.count * item.price).toFixed(2))}
+                              disabled
+                            />
+                          </p>
+                          <p>
+                            <input
+                              type="hidden"
+                              name="itemPrice"
+                              value={item.price}
+                              disabled
+                            />
+                          </p>
+                          <p>
+                            <span
+                              className="trash"
+                              onClick={this.handleDeleteFromCart.bind(
+                                this,
+                                cartIndex
+                              )}
+                            >
+                              &#128465;
+                            </span>
+                          </p>
+                        </div>
+                      );
+                    })}
+                    <input type="submit" value="Valider le Panier" />
+                  </form>
+                </section>
+              )}
             </main>
           );
         }}

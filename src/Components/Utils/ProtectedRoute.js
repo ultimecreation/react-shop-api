@@ -11,7 +11,11 @@ export default class ProtectedRoute extends Component {
       <Route
         {...rest}
         render={props =>
-          isAuthenticated ? <Component {...props} /> : <Redirect to="/" />
+          isAuthenticated ? (
+            <Component {...props} user={this.context.user} />
+          ) : (
+            <Redirect to="/connexion" />
+          )
         }
       ></Route>
     );

@@ -4,15 +4,19 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { ProductProvider } from "./Context/ProductContext";
 import { CartProvider } from "./Context/CartContext";
-import { UserProvider } from "./Context/UserContext";
+import { UserProvider, UserConsumer } from "./Context/UserContext";
 
 ReactDOM.render(
   <UserProvider>
-    <CartProvider>
-      <ProductProvider>
-        <App />
-      </ProductProvider>
-    </CartProvider>
+    <UserConsumer>
+      {userState => (
+        <CartProvider>
+          <ProductProvider>
+            <App userState={userState} />
+          </ProductProvider>
+        </CartProvider>
+      )}
+    </UserConsumer>
   </UserProvider>,
   document.getElementById("root")
 );
