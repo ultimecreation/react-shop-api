@@ -7,20 +7,32 @@ export class CartProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cartItems: []
+      cartItems: [],
+      itemsCount: 0
     };
     this.addToCart = this.addToCart.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
     this.deleteFromCart = this.deleteFromCart.bind(this);
     this.registerItems = this.registerItems.bind(this);
+    // this.getItemsCount = this.getItemsCount.bind(this);
   }
 
   componentDidMount() {
     if (JSON.parse(localStorage.getItem("cartItems")) !== null) {
-      this.setState({
-        cartItems: JSON.parse(localStorage.getItem("cartItems"))
-      });
+      let cartItems = JSON.parse(localStorage.getItem("cartItems"));
+      let itemsCount = cartItems.reduce((acc, item) => {
+        return (acc += item.count);
+      }, 0);
+      this.setState({ cartItems, itemsCount });
     }
+  }
+  getItemsCount() {
+    let cartItems = this.state.cartItems;
+    let itemsCount = cartItems.reduce((acc, item) => {
+      return (acc += item.count);
+    }, 0);
+    console.log(itemsCount);
+    this.setState({ itemsCount });
   }
   getValidatedCart(validatedCartName) {
     const validatedCartData = JSON.parse(
@@ -36,6 +48,7 @@ export class CartProvider extends Component {
     this.setState({ cartItems });
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }
+
   addToCart(product) {
     let cartItems = this.state.cartItems;
     let alreadyInCart = false;
@@ -43,11 +56,13 @@ export class CartProvider extends Component {
       if (item.id === product.id) {
         alreadyInCart = true;
         item.count++;
+        this.getItemsCount();
       }
     });
 
     if (!alreadyInCart) {
       cartItems.push({ ...product, count: 1 });
+      this.getItemsCount();
     }
 
     this.registerItems(cartItems);
@@ -57,8 +72,10 @@ export class CartProvider extends Component {
     cartItems.forEach(item => {
       if (item.id === product.id) {
         item.count--;
+        this.getItemsCount();
         if (item.count <= 0) {
           cartItems.splice(cartIndex, 1);
+          this.getItemsCount();
         }
       }
     });
@@ -69,6 +86,7 @@ export class CartProvider extends Component {
 
     cartItems.splice(cartIndex, 1);
     this.registerItems(cartItems);
+    this.getItemsCount();
   }
   render() {
     const cartState = {

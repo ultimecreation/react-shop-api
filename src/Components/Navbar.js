@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { UserConsumer } from "../Context/UserContext";
+import { CartConsumer } from "../Context/CartContext";
 const Navbar = (props, context) => {
   console.log(props, context);
   return (
@@ -20,14 +21,20 @@ const Navbar = (props, context) => {
               Boutique
             </NavLink>
 
-            <NavLink
-              to="/cart"
-              activeClassName={
-                props.location.pathname === "/cart" ? "active" : ""
-              }
-            >
-              <span>&#128717;</span>
-            </NavLink>
+            <CartConsumer>
+              {cartState => (
+                <NavLink
+                  to="/cart"
+                  activeClassName={
+                    props.location.pathname === "/cart" ? "active" : ""
+                  }
+                >
+                  <span>
+                    &#128717;<small>({cartState.itemsCount})</small>
+                  </span>
+                </NavLink>
+              )}
+            </CartConsumer>
             {!userState.isAuthenticated && (
               <NavLink
                 to="/connexion"
