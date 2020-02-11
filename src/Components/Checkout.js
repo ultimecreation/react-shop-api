@@ -15,7 +15,7 @@ export class Checkout extends Component {
     const onSuccess = payment => {
       let token = JSON.parse(localStorage.getItem("token"));
 
-      fetch("http://localhost/shop-api/api/v1/ordres/creer", {
+      fetch("https://shop-api.frameworks.software/api/v1/ordres/creer", {
         method: "POST",
         body: JSON.stringify({
           token: token,

@@ -24,7 +24,7 @@ export default class Login extends Component {
     };
 
     const response = await fetch(
-      "http://localhost/shop-api/api/v1/acces/connecter",
+      "https://shop-api.frameworks.software/api/v1/acces/connecter",
       {
         method: "POST",
         body: JSON.stringify(user)

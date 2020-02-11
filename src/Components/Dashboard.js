@@ -13,7 +13,7 @@ export default class Dashboard extends Component {
 
   getMyOrders() {
     const { email } = this.context.user;
-    fetch("http://localhost/shop-api/api/v1/ordres/mes-ordres", {
+    fetch("https://shop-api.frameworks.software/api/v1/ordres/mes-ordres", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({ email: email })

@@ -10,14 +10,11 @@ export default class ProductDetails extends Component {
   }
   componentDidMount() {
     let id = this.props.match.params.id;
-    fetch(`http://localhost/shop-api/api/v1/products/${id}`)
+    fetch(`https://shop-api.frameworks.software/api/v1/products/${id}`)
       .then(res => res.json())
       .then(data => this.setState({ product: data }));
   }
-  //   let id = this.props.match.params.id;
-  //   fetch(`http://localhost/shop-api/api/v1/products/${id}`)
-  //     .then(res => res.json())
-  //     .then(data => this.setState({ product: data }));
+ 
   render() {
     const { product } = this.state;
     let imageUrl;

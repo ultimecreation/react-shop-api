@@ -26,7 +26,7 @@ export default class Register extends Component {
     };
 
     const response = await fetch(
-      "http://localhost/shop-api/api/v1/acces/enregistrer",
+      "https://shop-api.frameworks.software/api/v1/acces/enregistrer",
       {
         method: "POST",
         body: JSON.stringify(user)

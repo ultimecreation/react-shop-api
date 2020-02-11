@@ -16,13 +16,13 @@ export class ProductProvider extends Component {
     this.getProductList();
   }
   getProductList() {
-    fetch(`http://localhost/shop-api/api/v1/products`)
+    fetch(`https://shop-api.frameworks.software/api/v1/products`)
       .then(res => res.json())
       .then(data => this.setState({ products: data }));
   }
 
   getSingleProduct(id) {
-    return fetch(`http://localhost/shop-api/api/v1/products/${id}`)
+    return fetch(`https://shop-api.frameworks.software/api/v1/products/${id}`)
       .then(res => res.json())
       .then(data => {
         return data;
