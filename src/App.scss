@@ -249,7 +249,8 @@ main#checkout {
 ///////////
 // CONNEXION
 ////////////
-main#connexion {
+main#connexion,
+main#inscription {
   header {
   }
   section {
@@ -378,7 +379,8 @@ main#connexion {
   ///////////
   // CONNEXION
   ////////////
-  main#connexion {
+  main#connexion,
+  main#inscription {
     header {
     }
     section {
@@ -409,6 +411,10 @@ main#connexion {
             background: white;
           }
         }
+      }
+      p {
+        width: 50%;
+        margin: 0.5rem auto;
       }
     }
   }

@@ -83,8 +83,7 @@ export default class Cart extends Component {
     //
   }
   render() {
-    let token;
-    token = token ? localStorage.getItem("token") : null;
+    let token = localStorage.getItem("token");
     return (
       <CartConsumer>
         {cartState => {
@@ -199,12 +198,12 @@ export default class Cart extends Component {
                         </div>
                       );
                     })}
-                    {token !== null ? (
-                      <input type="submit" value="Valider le Panier" />
-                    ) : (
+                    {token === null ? (
                       <Link to="connexion" className="submit-connect">
                         Se Connecter
                       </Link>
+                    ) : (
+                      <input type="submit" value="Valider le Panier" />
                     )}
                   </form>
                 </section>

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { UserContext } from "../Context/UserContext";
 
-export default class Login extends Component {
+export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: "",
       email: "",
       password: "",
+      password_confirm: "",
       errors: []
     };
     this.handleChange = this.handleChange.bind(this);
@@ -19,12 +19,14 @@ export default class Login extends Component {
   async handleSubmit(e) {
     e.preventDefault();
     const user = {
+      name: this.state.name,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      password_confirm: this.state.password_confirm
     };
 
     const response = await fetch(
-      "http://localhost/shop-api/api/v1/acces/connecter",
+      "http://localhost/shop-api/api/v1/acces/enregistrer",
       {
         method: "POST",
         body: JSON.stringify(user)
@@ -36,24 +38,35 @@ export default class Login extends Component {
       const errors = data.errors;
       this.setState({ errors });
     }
-    if (data.token) {
-      const token = data.token;
-      if (token.startsWith("Bearer ")) {
-        this.context.setToken(token);
-        this.props.history.push("/mon-compte");
-      }
+    if (data.success) {
+      this.props.history.push("/connexion");
     }
   }
   render() {
     const { errors } = this.state;
 
     return (
-      <main id="connexion">
+      <main id="inscription">
         <header>
-          <h1>Connexion</h1>
+          <h1>Inscription</h1>
         </header>
         <section>
           <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="name">
+                Nom{" "}
+                {errors.name && (
+                  <span className="error"> &#9888; {errors.name}</span>
+                )}
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Entrer votre email"
+                onChange={this.handleChange}
+              />
+            </div>
             <div className="form-group">
               <label htmlFor="email">
                 Email{" "}
@@ -62,7 +75,7 @@ export default class Login extends Component {
                 )}
               </label>
               <input
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 placeholder="Entrer votre email"
@@ -85,14 +98,26 @@ export default class Login extends Component {
                 autoComplete="false"
               />
             </div>
-            <input type="submit" value="Se Connecter" />{" "}
+            <div className="form-group">
+              <label htmlFor="password_confirm">
+                Confirmer le mot de passe
+                {errors.password_confirm && (
+                  <span className="error"> &#9888; {errors.password}</span>
+                )}
+              </label>
+              <input
+                type="password"
+                name="password_confirm"
+                id="password_confirm"
+                placeholder="Entrer votre mot de passe"
+                onChange={this.handleChange}
+                autoComplete="false"
+              />
+            </div>
+            <input type="submit" value="S'inscrire" />{" "}
           </form>
-          <p>
-            Pas enregistrer ? <Link to="/inscription">Je créer mon Compte</Link>
-          </p>
         </section>
       </main>
     );
   }
 }
-Login.contextType = UserContext;

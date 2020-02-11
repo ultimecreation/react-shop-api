@@ -9,7 +9,8 @@ import Checkout from "./Components/Checkout";
 import Login from "./Components/Login";
 import ProtectedRoute from "./Components/Utils/ProtectedRoute";
 import Dashboard from "./Components/Dashboard";
-function App({ userState }) {
+import Register from "./Components/Register";
+function App() {
   return (
     <div className="App">
       <BrowserRouter>
@@ -24,6 +25,7 @@ function App({ userState }) {
             render={props => <Checkout {...props} user={userState.user} />}
           /> */}
           <Route path="/connexion" component={Login} />
+          <Route path="/inscription" component={Register} />
           <ProtectedRoute path="/mon-compte" component={Dashboard} />
           <ProtectedRoute path="/paiement" component={Checkout} />
         </Switch>

@@ -5,13 +5,13 @@ import { Route, Redirect } from "react-router-dom";
 export default class ProtectedRoute extends Component {
   render() {
     const { component: Component, ...rest } = this.props;
-    const { isAuthenticated } = this.context;
+    const token = localStorage.getItem("token");
 
     return (
       <Route
         {...rest}
         render={props =>
-          isAuthenticated ? (
+          token ? (
             <Component {...props} user={this.context.user} />
           ) : (
             <Redirect to="/connexion" />
@@ -21,4 +21,3 @@ export default class ProtectedRoute extends Component {
     );
   }
 }
-ProtectedRoute.contextType = UserContext;

@@ -4,7 +4,6 @@ import { CartConsumer } from "../Context/CartContext";
 const Navbar = props => {
   let token = localStorage.getItem("token");
 
-  console.log(token);
   return (
     <div className="main-nav ">
       <div className="brand">

@@ -10,33 +10,28 @@ export default class Dashboard extends Component {
       orders: []
     };
   }
-  componentDidMount() {
-    this.setState(() => ({
-      isAuthenticated: this.context.isAuthenticated,
-      user: this.context.user
-    }));
-    this.getMyOrders();
-  }
-  async getMyOrders() {
+
+  getMyOrders() {
     const { email } = this.context.user;
-    const response = await fetch(
-      "http://localhost/shop-api/api/v1/ordres/mes-ordres",
-      {
-        method: "POST",
-
-        body: JSON.stringify({ email: email })
-      }
-    ).catch(err => console.log(err));
-
-    const data = await response.json();
-    if (data) {
-      this.setState(() => ({
-        orders: data
-      }));
-    }
+    fetch("http://localhost/shop-api/api/v1/ordres/mes-ordres", {
+      method: "POST",
+      body: JSON.stringify({ email: email })
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status, "pas ok");
+        }
+        return res.json();
+      })
+      .then(data => {
+        this.setState(() => ({
+          orders: data
+        }));
+      })
+      .catch(err => console.log(err));
   }
   render() {
-    console.log(this.state);
+    this.getMyOrders();
     const { orders } = this.state;
     return (
       <main id="orders-summary">
