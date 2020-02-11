@@ -39,7 +39,7 @@ export default class Login extends Component {
       const token = data.token;
       if (token.startsWith("Bearer ")) {
         this.context.setToken(token);
-        this.props.history.push("/dashboard");
+        this.props.history.push("/mon-compte");
       }
     }
   }

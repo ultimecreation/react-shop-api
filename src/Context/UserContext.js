@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getDefaultNormalizer } from "@testing-library/react";
 
 export const UserContext = React.createContext();
 UserContext.displayName = "User";
@@ -22,9 +21,12 @@ export class UserProvider extends Component {
       const userData = JSON.parse(atob(token.split(".")[1]));
       const timestamp = new Date().getTime() / 1000;
 
-      let isAuthenticated = userData.exp - timestamp > 0 ? true : false;
-
-      this.setState({ isAuthenticated, user: userData.user });
+      if (userData.exp - timestamp > 0) {
+        this.setState({ isAuthenticated: true, user: userData.user });
+      } else {
+        this.setState({ isAuthenticated: false, user: {} });
+        localStorage.removeItem("token");
+      }
     }
   }
   setToken(token) {

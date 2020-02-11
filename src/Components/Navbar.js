@@ -1,8 +1,10 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { UserConsumer } from "../Context/UserContext";
 import { CartConsumer } from "../Context/CartContext";
 const Navbar = props => {
+  let token = localStorage.getItem("token");
+
+  console.log(token);
   return (
     <div className="main-nav ">
       <div className="brand">
@@ -21,9 +23,9 @@ const Navbar = props => {
         <CartConsumer>
           {cartState => (
             <NavLink
-              to="/cart"
+              to={token === null ? "/connexion" : "/commande"}
               activeClassName={
-                props.location.pathname === "/cart" ? "active" : ""
+                props.location.pathname === "/commande" ? "active" : ""
               }
             >
               <span>

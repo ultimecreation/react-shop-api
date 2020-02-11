@@ -16,15 +16,16 @@ function App({ userState }) {
         <Navbar />
         <Switch>
           <Route exact path="/" component={Shop} />
-          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/commande" component={Cart} />
           <Route exact path="/details/:id" component={ProductDetails} />
-          <Route
+          {/* <Route
             exact
             path="/paiement"
             render={props => <Checkout {...props} user={userState.user} />}
-          />
+          /> */}
           <Route path="/connexion" component={Login} />
           <ProtectedRoute path="/mon-compte" component={Dashboard} />
+          <ProtectedRoute path="/paiement" component={Checkout} />
         </Switch>
       </BrowserRouter>
     </div>

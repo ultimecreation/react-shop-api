@@ -211,6 +211,15 @@ main#cart-validation {
           }
         }
       }
+      input[type="submit"],
+      .submit-connect {
+        background: $primary;
+        border: none;
+        color: $secondary;
+        padding: 0.5rem;
+        margin-top: 1rem;
+        text-decoration: none;
+      }
     }
   }
 }
@@ -279,6 +288,48 @@ main#connexion {
 ////////////
 .paypal-button {
   margin-top: 1rem;
+}
+///////////
+// ORDERS SUMMARY
+////////////
+#orders-summary {
+  header {
+  }
+  section {
+    article {
+      margin: 1.5rem auto;
+      box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.2);
+      padding: 1rem;
+      p {
+        margin: 0.5rem auto;
+      }
+      details {
+        summary {
+          padding: 0.25rem;
+          background: $primary;
+          color: $secondary;
+        }
+        p {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          span {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+@keyframes sweep {
+  0% {
+    opacity: 0;
+    height: 0px;
+  }
+  100% {
+    opacity: 1;
+    height: 100%;
+  }
 }
 //////////
 // MEDIA QUERY >596px
@@ -358,6 +409,18 @@ main#connexion {
             background: white;
           }
         }
+      }
+    }
+  }
+  ///////////
+  // ORDERS SUMMARY
+  ////////////
+  #orders-summary {
+    header {
+    }
+    section {
+      article {
+        max-width: 50%;
       }
     }
   }

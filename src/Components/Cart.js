@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { CartContext, CartConsumer } from "../Context/CartContext";
 export default class Cart extends Component {
   constructor(props) {
@@ -82,6 +83,8 @@ export default class Cart extends Component {
     //
   }
   render() {
+    let token;
+    token = token ? localStorage.getItem("token") : null;
     return (
       <CartConsumer>
         {cartState => {
@@ -196,7 +199,13 @@ export default class Cart extends Component {
                         </div>
                       );
                     })}
-                    <input type="submit" value="Valider le Panier" />
+                    {token !== null ? (
+                      <input type="submit" value="Valider le Panier" />
+                    ) : (
+                      <Link to="connexion" className="submit-connect">
+                        Se Connecter
+                      </Link>
+                    )}
                   </form>
                 </section>
               )}
