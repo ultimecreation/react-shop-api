@@ -70,14 +70,16 @@ main {
 
   align-items: baseline;
   padding: 1rem;
-  .brand p {
+  .brand a {
     font-size: 1.5rem;
     color: $danger;
+    text-decoration: none;
   }
   nav {
     display: flex;
     align-items: baseline;
     margin: 0 auto;
+
     a {
       text-decoration: none;
       color: $danger;
@@ -139,6 +141,15 @@ section#shop {
 // SINGLE PRODUCT
 ////////////
 main#single-product {
+  a {
+    background: $danger;
+    color: black;
+    font-weight: bold;
+    padding: 0.5rem;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+  }
   text-align: center;
   .single-product__body {
     img {
@@ -295,6 +306,14 @@ main#inscription {
 ////////////
 #orders-summary {
   header {
+    p {
+      background: $danger;
+      color: black;
+      font-weight: bold;
+      padding: 0.5rem;
+      display: inline-block;
+      cursor: pointer;
+    }
   }
   section {
     article {
@@ -423,6 +442,9 @@ main#inscription {
   ////////////
   #orders-summary {
     header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
     }
     section {
       article {

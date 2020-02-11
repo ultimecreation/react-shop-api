@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ProductContext } from "../../Context/ProductContext";
-
+import { Link } from "react-router-dom";
 export default class ProductDetails extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +34,7 @@ export default class ProductDetails extends Component {
     return (
       <main id="single-product">
         <header>
+          <Link to="/"> &lt;&lt; Retour</Link>
           <h1>Détails {product.title} </h1>
         </header>
         <section>

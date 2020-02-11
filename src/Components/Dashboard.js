@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { UserContext } from "../Context/UserContext";
-
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -9,17 +8,19 @@ export default class Dashboard extends Component {
       user: {},
       orders: []
     };
+    this.logout = this.logout.bind(this);
   }
 
   getMyOrders() {
     const { email } = this.context.user;
     fetch("http://localhost/shop-api/api/v1/ordres/mes-ordres", {
       method: "POST",
+      mode: "cors",
       body: JSON.stringify({ email: email })
     })
       .then(res => {
         if (!res.ok) {
-          throw new Error(res.status, "pas ok");
+          throw new Error(res.status);
         }
         return res.json();
       })
@@ -30,6 +31,10 @@ export default class Dashboard extends Component {
       })
       .catch(err => console.log(err));
   }
+  logout() {
+    localStorage.removeItem("token");
+    this.props.history.push("/");
+  }
   render() {
     this.getMyOrders();
     const { orders } = this.state;
@@ -37,11 +42,13 @@ export default class Dashboard extends Component {
       <main id="orders-summary">
         <header>
           <h1>Mes Ordres</h1>
+          <p onClick={this.logout}>Déconnexion</p>
         </header>
+
         <section>
           {orders.length > 0 &&
-            orders.map(order => (
-              <article key={orders.id}>
+            orders.map((order, orderIndex) => (
+              <article key={orderIndex}>
                 <p>
                   Achat du:
                   <span>{order.created_at} </span>
@@ -62,6 +69,7 @@ export default class Dashboard extends Component {
                     <span>Qté</span>
                     <span>Prix</span>
                   </p>
+                  <hr />
                   {order.lines.map((line, index) => (
                     <p key={index}>
                       <span>{line.product_title}</span>

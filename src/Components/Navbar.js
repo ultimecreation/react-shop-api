@@ -7,9 +7,10 @@ const Navbar = props => {
   return (
     <div className="main-nav ">
       <div className="brand">
-        <p>
+        <NavLink to="/">
+          {" "}
           <strong>React Shop Api</strong>
-        </p>
+        </NavLink>
       </div>
       <nav>
         <NavLink
@@ -28,7 +29,8 @@ const Navbar = props => {
               }
             >
               <span>
-                &#128717;<small>({cartState.itemsCount})</small>
+                &#128717;
+                <small>({cartState.itemsCount})</small>
               </span>
             </NavLink>
           )}
